@@ -24,7 +24,7 @@ class Eleve:
 
     def ajoutNewEleve():
         e = Eleve("","")
-        conn = sqlite3.connect('tp2bdd.db')
+        conn = sqlite3.connect('tpEmploiTemp/tp2bdd.db')
         cursorForDB = conn.cursor()
         e.set_nomApprenant("Ansart")
         e.set_prenomApprenant("Emelyne")

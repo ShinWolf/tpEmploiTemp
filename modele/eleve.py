@@ -1,7 +1,6 @@
 import sqlite3
 
-class Eleve:
-    
+class Eleve:    
 
     def __init__(self, nomApprenant, prenomApprenant):
         self.__nomApprenant = nomApprenant
@@ -19,9 +18,6 @@ class Eleve:
     def set_prenomApprenant(self, prenomApprenant):
         self.__prenomApprenant = prenomApprenant 
 
-
-
-
     def ajoutNewEleve():
         e = Eleve("","")
         conn = sqlite3.connect('tp2bdd.db')
@@ -33,7 +29,16 @@ class Eleve:
         conn.commit()
         conn.close()
 
-Eleve.ajoutNewEleve()
+    def deleteEeve(id):
+        e = Eleve("","")
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB = conn.cursor()
+        i = (id,)
+        cursorForDB.execute("DELETE FROM APPRENANT WHERE idEleve = ?",i)
+        conn.commit()
+        conn.close()
+
+Eleve.deleteEeve(32)
 
 
         

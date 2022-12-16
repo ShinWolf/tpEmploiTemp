@@ -26,14 +26,9 @@ class Eleve:
         e = Eleve("","")
         conn = sqlite3.connect('tp2bdd.db')
         cursorForDB = conn.cursor()
-        e.set_nomApprenant("Ansart")
-        e.set_prenomApprenant("Emelyne")
+        e.set_nomApprenant("Grosse")
+        e.set_prenomApprenant("PUTE")
         apprenant = [(e.get_nomApprenant(),e.get_prenomApprenant(),3),]
         cursorForDB.executemany("INSERT INTO APPRENANT (nomApprenant, prenomApprenant,idClasse) VALUES (?,?,?)",apprenant)
         conn.commit()
         conn.close()
-
-Eleve.ajoutNewEleve()
-
-
-        

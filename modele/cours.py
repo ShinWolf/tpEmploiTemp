@@ -19,22 +19,26 @@ class Cours:
     def set_heureCours(self, heureCours):
         self.__heureCours = heureCours 
 
-    def ajoutNewCours():
-        c = Cours("","")
+    def ajoutNewCours(jourCours, heureCours, idClasse, idEnseignant, idMatiere):
         conn = sqlite3.connect('tp2bdd.db')
         cursorForDB = conn.cursor()
-        c.set_jourCours("21-10-2019")
-        c.set_heureCours("AM")
-        cour = [(c.get_jourCours(),c.get_heureCours(),3,1,1),]
+        cour = [(jourCours, heureCours, idClasse, idEnseignant, idMatiere),]
         cursorForDB.executemany("INSERT INTO COURS (jourCours, HeureCours,k_idClasse, k_idEnseignant,k_idMatiere) VALUES (?,?,?,?,?)",cour)
         conn.commit()
         conn.close()
 
     def deleteCours(id):
-        c = Cours("","")
         conn = sqlite3.connect('tp2bdd.db')
         cursorForDB = conn.cursor()
         i = (id,)
         cursorForDB.execute("DELETE FROM COURS WHERE idCours=?",i)
+        conn.commit()
+        conn.close()
+
+    def mofidCours(idCours, jourCours, heureCour, idClasse, idEnseignant, idMatiere ):
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB = conn.cursor()
+        cour = [(jourCours,heureCour,idClasse, idEnseignant,idMatiere,idCours),]
+        cursorForDB.executemany("UPDATE COURS SET jourCours = ? , heureCours = ?, k_idClasse= ?, k_idEnseignant = ?, k_idMatiere =?  WHERE idCours = ?",cour)
         conn.commit()
         conn.close()

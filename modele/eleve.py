@@ -6,6 +6,12 @@ class Eleve:
         self.__nomApprenant = nomApprenant
         self.__prenomApprenant = prenomApprenant
 
+    def __init__(self, nomApprenant, prenomApprenant, idEleve, idClasse):
+        self.__nomApprenant = nomApprenant
+        self.__prenomApprenant = prenomApprenant
+        self.__idEleve = idEleve
+        self.__idClasse = idClasse
+
     def get_nomApprenant(self):
         return self.__nomApprenant
 
@@ -18,19 +24,28 @@ class Eleve:
     def set_prenomApprenant(self, prenomApprenant):
         self.__prenomApprenant = prenomApprenant 
 
-    def ajoutNewEleve():
-        e = Eleve("","")
+
+    def get_idEleve(self):
+        return self.__idEleve
+
+    def set_idEleve(self, idEleve):
+        self.__idEleve = idEleve 
+
+    def get_idClasse(self):
+        return self.__idClasse
+
+    def set_idClasse(self, idClasse):
+        self.__idClasse = idClasse 
+
+    def ajoutNewEleve(nomApprenant, prenomApprenant, idClasse):
         conn = sqlite3.connect('tp2bdd.db')
         cursorForDB = conn.cursor()
-        e.set_nomApprenant("Ansart")
-        e.set_prenomApprenant("Emelyne")
-        apprenant = [(e.get_nomApprenant(),e.get_prenomApprenant(),3),]
+        apprenant = [(nomApprenant, prenomApprenant,idClasse),]
         cursorForDB.executemany("INSERT INTO APPRENANT (nomApprenant, prenomApprenant,idClasse) VALUES (?,?,?)",apprenant)
         conn.commit()
         conn.close()
 
     def deleteEeve(id):
-        e = Eleve("","")
         conn = sqlite3.connect('tp2bdd.db')
         cursorForDB = conn.cursor()
         i = (id,)
@@ -38,7 +53,14 @@ class Eleve:
         conn.commit()
         conn.close()
 
-Eleve.deleteEeve(32)
+    def mofidEleve(idEleve, idClasse, nomApprenant, prenomApprenant):
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB = conn.cursor()
+        apprenant = [(nomApprenant,prenomApprenant,idClasse, idEleve),]
+        cursorForDB.executemany("UPDATE APPRENANT SET nomApprenant = ? , prenomApprenant = ?, idClasse= ? WHERE idEleve = ?",apprenant)
+        conn.commit()
+        conn.close()
+
 
 
         

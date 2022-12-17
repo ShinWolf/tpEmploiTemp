@@ -12,17 +12,19 @@ class Matiere:
         self.__libelleMatiere = libelleMatiere
     
 
-    def getIdMatWLibelle(pLibelleMatiere):
+    def ajoutMatiere(nomMatiere):
         conn = sqlite3.connect('tp2bdd.db')
-        cursorForDb = conn.cursor()
-        idMat = cursorForDb.execute("SELECT idMatiere FROM MATIERE where libelleMatiere= (?)",(pLibelleMatiere,))
+        cursorForDB = conn.cursor()
+        nom = (nomMatiere,)
+        cursorForDB.execute("Insert into MATIERE(libelleMatiere) values(?)", nom)
         conn.commit()
-        return idMat
+        conn.close()
 
-    def ajoutMatiere(self, nomMatiere):
-        m =  Matiere(nomMatiere)
+    def delMatiere(nomMatiere):
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB =  conn.cursor()
+        cursorForDB.execute("DELETE FROM MATIERE WHERE libelleMatiere = (?)", (nomMatiere,))
+        conn.commit()
+        conn.close()
 
-    def delMatiere(self, nomMatiere):
-        del nomMatiere
 
-print(Matiere.getIdMatWLibelle("POIN"))

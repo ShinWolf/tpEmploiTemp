@@ -73,18 +73,13 @@ def popAjoutAppre():
     top.label_prenom.pack()
     top.prenom = tk.Entry(top)
     top.prenom.pack()
-    top.bouton_valider = tk.Button(top, text="Valider", command=valider)
+    top.label_idclasse = tk.Label(top, text="idclasse :")
+    top.label_idclasse.pack()
+    top.idclasse = tk.Entry(top)
+    top.idclasse.pack()
+    top.bouton_valider = tk.Button(top, text="Valider", command=Eleve.ajoutNewEleve(top.nom.get(), top.prenom.get(), top.idclasse.get()))
     top.bouton_valider.pack()
 
-def valider(self):
-        self.conn = sqlite3.connect("tp2bdd.db")
-        self.cursor = self.conn.cursor()
-        self.cursor.execute("INSERT INTO APPRENANT (nomApprenant, prenomApprenant, idClasse) VALUES (?, ?, ?)",
-                            (self.nom.get(), self.prenom.get(), self.classe.get()))
-        self.conn.commit()
-        self.conn.close()
-        self.parent.refresh()
-        self.destroy()
 
 menuEleve.add_command(label="Ajout d'un élève", command=popAjoutAppre)
 

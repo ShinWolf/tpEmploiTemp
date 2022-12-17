@@ -61,6 +61,11 @@ class Eleve:
         conn.commit()
         conn.close()
 
-
-
-        
+    def listEleve():
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB = conn.cursor()
+        e = (cursorForDB.execute('SELECT * FROM APPRENANT').fetchall())
+        conn.commit()
+        conn.close()
+        print(e[0])
+        return e

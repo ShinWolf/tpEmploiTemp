@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
+from modele.classe import Classe
+from modele.cours import Cours
+from modele.eleve import Eleve
+from modele.enseigant import Enseignant
+from modele.matiere import Matiere
 
 root = tk.Tk()
 
@@ -55,8 +60,6 @@ menubar.add_cascade(label="Classe", menu=menuClasse)
 
 menubar.add_command(label="Quitter", command=root.destroy)
 
-
-
 ### LES POP UP DU MENU ELEVE ###
 
 # Pop up pour ajouter un élève
@@ -77,9 +80,6 @@ class AjouterApprenant(tk.Toplevel):
         a.prenom.pack()
         a.bouton_valider = tk.Button(a, text="Valider", command=a.valider)
         a.bouton_valider.pack()
-
-def ajouter_apprenant(a):
-    AjouterApprenant(a)
 
 # Pop up pour associer un élève à une classe
 class AssocierApprenantClasse(tk.Toplevel):

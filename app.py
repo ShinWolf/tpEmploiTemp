@@ -63,7 +63,7 @@ menubar.add_command(label="Quitter", command=root.destroy)
 ### LES POP UP DU MENU ELEVE ###
 
 # Pop up pour ajouter un élève
-class AjouterApprenant(tk.Toplevel):
+class AjouterApprenant():
     def __init__(a, parent):
         tk.Toplevel.__init__(a, parent)
         a.parent = parent

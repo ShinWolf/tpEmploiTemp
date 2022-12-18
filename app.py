@@ -3,6 +3,8 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 
+from modele.eleve import Eleve
+
 root = tk.Tk()
 
 width = root.winfo_screenwidth()
@@ -54,6 +56,23 @@ menuClasse.add_command(label="Liste d'élèves par classe")
 menubar.add_cascade(label="Classe", menu=menuClasse)
 
 menubar.add_command(label="Quitter", command=root.destroy)
+
+def getEntry():
+    res = idclasse.get()
+    res1 = idcla.get()
+    print(res, res1)
+
+label_idclasse = tk.Label(root, text="idclasse :")
+label_idclasse.pack()
+idclasse = tk.Entry(root)
+idclasse.pack()
+label_idcla = tk.Label(root, text="idclasse :")
+label_idcla.pack()
+idcla = tk.Entry(root)
+idcla.pack()
+bouton_valider = tk.Button(root, text="Valider", command=getEntry)
+bouton_valider.pack()
+
 
 
 

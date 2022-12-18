@@ -107,8 +107,36 @@ def popAjoutAppre():
     top.bouton_valider.pack()
 
 
-menuEleve.add_command(label="Ajout d'un élève", command=popAjoutAppre)
+def popAfficherEleve():
+    def getValueAjoutApp():
+        Eleve.listEleve()
 
+def popSupApp():
+    def getValueSuppApp():
+        Eleve.deleteEeve(top.idclasse.get(), top.nom.get(), top.prenom.get())
+    top = Toplevel(menuEleve)
+    top.title("Supprimer un élève")
+    top.geometry("300x200")
+    top.config(bg="gray")
+    top.label_nom = tk.Label(top, text="Nom :")
+    top.label_nom.pack()
+    top.nom = tk.Entry(top)
+    top.nom.pack()
+    top.label_prenom = tk.Label(top, text="Prénom :")
+    top.label_prenom.pack()
+    top.prenom = tk.Entry(top)
+    top.prenom.pack()
+    top.label_idclasse = tk.Label(top, text="idclasse :")
+    top.label_idclasse.pack()
+    top.idclasse = tk.Entry(top)
+    top.idclasse.pack()
+    top.bouton_valider = tk.Button(top, text="Valider", command=getValueSuppApp)
+    top.bouton_valider.pack()
+    
+
+menuEleve.add_command(label="Ajout d'un élève", command=popAjoutAppre)
+menuEleve.add_command(label="Supprimer un élève", command=popSupApp)
+menuEleve.add_command(label="Afficher la liste d'élève", command=popAfficherEleve)
 
 
 # Pop up pour associer un élève à une classe

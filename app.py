@@ -32,7 +32,6 @@ menubar.add_cascade(label="Eleve", menu=menuEleve)
 
 menuCours = Menu(menubar, tearoff=0)
 
-menuCours.add_command(label="Suppression d'un cours")
 menubar.add_cascade(label="Cours", menu=menuCours)
 
 menuMatiere = Menu(menubar, tearoff=0)
@@ -320,7 +319,7 @@ def popModifCours():
     def getValModCour():
         Cours.mofidCours(modifCour.date.get(),modifCour.heure.get(),modifCour.id_classe.get(),modifCour.id_enseignant.get(),modifCour.id_matiere.get() )
     modifCour = Toplevel(menuCours)
-    modifCour.title("Ajouter un cours")
+    modifCour.title("Modifier un cours")
     modifCour.geometry("300x200")
     modifCour.config(bg="gray")
     modifCour.label_heure = tk.Label(modifCour, text="Heure :")
@@ -350,20 +349,19 @@ menuCours.add_command(label="Modification d'un cours", command= popModifCours)
 
 
 # Pop up pour supprimer un cours
-def popModifCours():
-    def getValModCour():
-        Cours.mofidCours(modifCour.date.get(),modifCour.heure.get(),modifCour.id_classe.get(),modifCour.id_enseignant.get(),modifCour.id_matiere.get() )
+def popSuppCours():
+    def getValSupCour():
+        Cours.deleteCours(suppCour.id.get())
     suppCour = Toplevel(menuCours)
-    suppCour.title("Ajouter un cours")
+    suppCour.title("Supprimer un cours")
     suppCour.geometry("300x200")
     suppCour.config(bg="gray")
-    suppCour.label_cours = tk.Label(modifCour, text="Heure :")
-    suppCour.label_cours.pack()
-    suppCour.heure = tk.Entry(modifCour)
-    suppCour.heure.pack()
+    suppCour.label_id = tk.Label(suppCour, text="id :")
+    suppCour.label_id.pack()
+    suppCour.id = tk.Entry(suppCour)
+    suppCour.id.pack()
+    suppCour.bouton_valider = tk.Button(suppCour, text="Valider", command=getValSupCour)
+    suppCour.bouton_valider.pack()
 
-    modifCour.bouton_valider = tk.Button(modifCour, text="Valider", command=getValModCour)
-    modifCour.bouton_valider.pack()
-
-
+menuCours.add_command(label="Suppression d'un cours", command=popSuppCours)
 root.mainloop()

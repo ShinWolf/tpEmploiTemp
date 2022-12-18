@@ -16,8 +16,24 @@ class Enseignant:
     def set_prenomEnseigant(self, prenom):
         self.__prenomEnseignant = prenom
 
-    def ajoutMatiere(self, matiere):
+    def ajoutMatiereEnsei(self, matiere):
         self.__listMatiereAssocie.append(matiere)
+
+    def ajoutNewEnsei(nomEnsei, prenomEnsei, ):
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB = conn.cursor()
+        ens = [(nomEnsei, prenomEnsei),]
+        cursorForDB.executemany("INSERT INTO ENSEIGNANT (nomEnseignant, prenomEnseignant) VALUES (?,?)",ens)
+        conn.commit()
+        conn.close()
+    
+    def deleteEnsei(id):
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB = conn.cursor()
+        i = (id,)
+        cursorForDB.execute("DELETE FROM ENSEIGNANT WHERE idEnseignant = ?",i)
+        conn.commit()
+        conn.close()
 
     def listAllEnseigant():
         conn = sqlite3.connect('tp2bdd.db')

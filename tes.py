@@ -28,6 +28,31 @@
 # # app = ScheduleGUI(root)
 # # root.mainloop()
 
+class ScheduleGUI:
+    def __init__(self, root):
+        self.root = root
+        root.title("Emploi du temps")
+
+        self.days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
+        self.hours = ['8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00']
+
+        # Créer une grille pour afficher les jours de la semaine et les heures
+        for i in range(7):
+            tk.Label(root, text=self.days[i]).grid(row=0, column=i+1)
+            for j in range(10):
+                tk.Label(root, text=self.hours[j]).grid(row=j+1, column=0)
+
+        # Créer des widgets de texte pour afficher l'emploi du temps
+        self.schedule_widgets = []
+        for i in range(7):
+            column = []
+            for j in range(10):
+                widget = tk.Text(root, width=20, height=3)
+                widget.grid(row=j+1, column=i+1)
+                column.append(widget)
+            self.schedule_widgets.append(column)
+
+app = ScheduleGUI(root)
 # # import tkinter as tk
 
 # # # Création de la fenêtre principale

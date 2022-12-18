@@ -8,6 +8,7 @@ from modele.eleve import Eleve
 from modele.enseigant import Enseignant
 from modele.matiere import Matiere
 from modele.classe import Classe
+from modele.cours import Cours
 
 root = tk.Tk()
 
@@ -50,7 +51,34 @@ menubar.add_cascade(label="Classe", menu=menuClasse)
 
 
 menubar.add_command(label="Quitter", command=root.destroy)
+def afficheEmploiClasse():
+    saisie = zone_texte.get()
+    empl = Cours.listeCoursClass(saisie)
 
+    boite_dialogue = tk.Toplevel()
+    boite_dialogue.title('Données filtrées')
+
+    zone_texte_donnees = tk.Text(boite_dialogue)
+    for jours, heures, idclasse in empl:
+        print(f'{jours}{heures}{idclasse}')
+        zone_texte_donnees.insert(tk.END, f'{jours} {heures} {idclasse}\n')
+    zone_texte_donnees.pack()
+
+def popSaisieIdClasse():
+    test = Toplevel(menuClasse)
+    test.title("Saisie")
+    test.geometry("300x200")
+    test.config(bg="gray")
+    test.label_prenom = tk.Label(test, text="id de la classe :")
+    test.label_prenom.pack()
+    global zone_texte 
+    zone_texte = tk.Entry(test)
+    zone_texte.pack()
+    bouton_afficher = tk.Button(test, text='Afficher les données', command=afficheEmploiClasse)
+    bouton_afficher.pack()
+
+
+menuClasse.add_command(label="Affiche Emploi du temp d'une classe", command=popSaisieIdClasse)
 
 # Class pour créer le tableau qui affiche les élèves d'une classe
 def afficheListeEleveClasse():

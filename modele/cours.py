@@ -42,3 +42,10 @@ class Cours:
         cursorForDB.executemany("UPDATE COURS SET jourCours = ? , heureCours = ?, k_idClasse= ?, k_idEnseignant = ?, k_idMatiere =?  WHERE idCours = ?",cour)
         conn.commit()
         conn.close()
+
+    def listeCoursClass(idClasse):
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB = conn.cursor()
+        lesCours = cursorForDB.execute("SELECT jourCours, heureCours, k_idClasse FROM COURS WHERE k_idClasse = ?", (idClasse,))
+        conn.commit()
+        return lesCours

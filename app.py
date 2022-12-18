@@ -7,6 +7,7 @@ from tkinter import messagebox
 from modele.eleve import Eleve
 from modele.enseigant import Enseignant
 from modele.matiere import Matiere
+from modele.cours import Cours
 from modele.classe import Classe
 
 root = tk.Tk()
@@ -31,7 +32,6 @@ menubar.add_cascade(label="Eleve", menu=menuEleve)
 
 menuCours = Menu(menubar, tearoff=0)
 
-menuCours.add_command(label="Ajout d'un cours")
 menuCours.add_command(label="Suppression d'un cours")
 menuCours.add_command(label="Modification d'un cours")
 menubar.add_cascade(label="Cours", menu=menuCours)
@@ -240,27 +240,37 @@ menuMatiere.add_command(label="Suppression d'une matière", command=popSupprimer
 ### LES POP UP DU MENU COURS ###
 
 # Pop up pour ajouter un cours
-class AjouterCours(tk.Toplevel):
-    def __init__(a, parent):
-        tk.Toplevel.__init__(a, parent)
-        a.parent = parent
-        a.title("Ajouter un cours")
-        a.geometry("300x200")
-        a.config(bg="gray")
-        a.label_id_matiere = tk.Label(a, text="ID matière :")
-        a.label_id_matiere.pack()
-        a.id_matiere = tk.Entry(a)
-        a.id_matiere.pack()
-        a.label_id_apprenant = tk.Label(a, text="ID apprenant :")
-        a.label_id_apprenant.pack()
-        a.id_apprenant = tk.Entry(a)
-        a.id_apprenant.pack()
-        a.label_date = tk.Label(a, text="Date :")
-        a.label_date.pack()
-        a.date = tk.Entry(a)
-        a.date.pack()
-        a.bouton_valider = tk.Button(a, text="Valider", command=a.valider)
-        a.bouton_valider.pack()
+def popAjouterCours():
+    def getValAjoutMat():
+        Cours.ajoutNewCours(ajoutCour.id_matiere.get(),ajoutCour.id_enseignant.get(),ajoutCour.date.get(), ajoutCour.dateid_classe.get())
+    ajoutCour = Toplevel(menuCours)
+    ajoutCour.title("Ajouter un cours")
+    ajoutCour.geometry("300x200")
+    ajoutCour.config(bg="gray")
+    ajoutCour.label_heure = tk.Label(ajoutCour, text="Heure :")
+    ajoutCour.label_heure.pack()
+    ajoutCour.heure = tk.Entry(ajoutCour)
+    ajoutCour.heure.pack()
+    ajoutCour.label_date = tk.Label(ajoutCour, text="Date :")
+    ajoutCour.label_date.pack()
+    ajoutCour.date = tk.Entry(ajoutCour)
+    ajoutCour.date.pack()
+    ajoutCour.label_id_matiere = tk.Label(ajoutCour, text="ID matière :")
+    ajoutCour.label_id_matiere.pack()
+    ajoutCour.id_matiere = tk.Entry(ajoutCour)
+    ajoutCour.id_matiere.pack()
+    ajoutCour.label_id_enseignant = tk.Label(ajoutCour, text="ID enseignant :")
+    ajoutCour.label_id_enseignant.pack()
+    ajoutCour.id_enseignant = tk.Entry(ajoutCour)
+    ajoutCour.id_enseignant.pack()
+    ajoutCour.label_id_classe = tk.Label(ajoutCour, text="ID classe :")
+    ajoutCour.label_id_classe.pack()
+    ajoutCour.id_classe = tk.Entry(ajoutCour)
+    ajoutCour.id_classe.pack()
+    ajoutCour.bouton_valider = tk.Button(ajoutCour, text="Valider", command=getValAjoutMat)
+    ajoutCour.bouton_valider.pack()
+
+menuCours.add_command(label="Ajout d'un cours", command=popAjouterCours)
 
 # Pop up pour modifier un cours
 class ModifierCours(tk.Toplevel):

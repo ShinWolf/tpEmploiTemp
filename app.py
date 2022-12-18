@@ -1,5 +1,6 @@
-import sqlite3
 import tkinter as tk
+from tkinter import ttk
+import sqlite3
 from tkinter import *
 from tkinter import messagebox
 
@@ -22,9 +23,6 @@ root.config(menu=menubar)
 
 menuEleve = Menu(menubar, tearoff=0)
 
-menuEleve.add_command(label="Suppresion d'un élève")
-menuEleve.add_command(label="Association d'un élève à une classe")
-menuEleve.add_command(label="Afficher les élèves")
 menubar.add_cascade(label="Eleve", menu=menuEleve)
 
 
@@ -57,29 +55,32 @@ menubar.add_cascade(label="Classe", menu=menuClasse)
 
 menubar.add_command(label="Quitter", command=root.destroy)
 
-def getEntry():
-    res = idclasse.get()
-    res1 = idcla.get()
-    print(res, res1)
 
-label_idclasse = tk.Label(root, text="idclasse :")
-label_idclasse.pack()
-idclasse = tk.Entry(root)
-idclasse.pack()
-label_idcla = tk.Label(root, text="idclasse :")
-label_idcla.pack()
-idcla = tk.Entry(root)
-idcla.pack()
-bouton_valider = tk.Button(root, text="Valider", command=getEntry)
-bouton_valider.pack()
+# Class pour créer le tableau qui affiche les élèves
 
+class Tableau(tk.Frame):
+    def __init__(self, parent, result):
+        tk.Frame.__init__(self, parent)
+        self.parent = parent
+        self.result = result
+        self.tableau = ttk.Treeview(self, columns=("ID", "Nom", "Prenom", "Classe"), show="headings")
+        self.tableau.heading("ID", text="ID")
+        self.tableau.heading("Nom", text="Nom")
+        self.tableau.heading("Prenom", text="Prenom")
+        self.tableau.heading("Classe", text="Classe")
+        self.tableau.pack()
+        self.afficher_tableau()
 
-
+    def afficher_tableau(self):
+        for row in self.result:
+            self.tableau.insert("", "end", values=row)
 
 ### LES POP UP DU MENU ELEVE ###
 
 # Pop up pour ajouter un élève
 def popAjoutAppre():
+    def getValueAjoutApp():
+        Eleve.ajoutNewEleve(top.prenom.get(), top.nom.get(), top.idclasse.get())
     top = Toplevel(menuEleve)
     top.title("Ajouter un élève")
     top.geometry("300x200")
@@ -96,7 +97,7 @@ def popAjoutAppre():
     top.label_idclasse.pack()
     top.idclasse = tk.Entry(top)
     top.idclasse.pack()
-    top.bouton_valider = tk.Button(top, text="Valider", command=Eleve.ajoutNewEleve(top.nom.get(), top.prenom.get(), top.idclasse.get()))
+    top.bouton_valider = tk.Button(top, text="Valider", command=getValueAjoutApp)
     top.bouton_valider.pack()
 
 

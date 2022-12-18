@@ -47,30 +47,40 @@ menuEnseignant.add_command(label="Afficher liste des enseignants")
 menuClasse = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Classe", menu=menuClasse)
 
-menuClasse.add_command(label="Liste d'élèves par classe")
+
 
 menubar.add_command(label="Quitter", command=root.destroy)
 
 
 # Class pour créer le tableau qui affiche les élèves d'une classe
+def afficheListeEleveClasse():
+    saisie = zone_texte.get()
+    maClasse = Classe.elevesDeClasse(saisie)
 
-class Tableau(tk.Frame):
-    def __init__(self, parent, result):
-        tk.Frame.__init__(self, parent)
-        self.parent = parent
-        self.result = result
-        self.tableau = ttk.Treeview(self, columns=("ID", "Nom", "Prenom", "Classe"), show="headings")
-        self.tableau.heading("ID", text="ID")
-        self.tableau.heading("Nom", text="Nom")
-        self.tableau.heading("Prenom", text="Prenom")
-        self.tableau.heading("Classe", text="Classe")
-        self.tableau.pack()
-        self.afficher_tableau()
+    donnees_filtrees = [(nom, prenom, classe) for nom, prenom, classe in maClasse if classe == saisie]
 
-    def afficher_tableau(self):
-        for row in self.result:
-            self.tableau.insert("", "end", values=row)
+    boite_dialogue = tk.Toplevel()
+    boite_dialogue.title('Données filtrées')
 
+    zone_texte_donnees = tk.Text(boite_dialogue)
+    for nom, prenom, classe in donnees_filtrees:
+        zone_texte_donnees.insert(tk.END, f'{nom} {prenom}: {classe}\n')
+    zone_texte_donnees.pack()
+
+def popSaisieNomClasse():
+    test = Toplevel(menuClasse)
+    test.title("Saisie")
+    test.geometry("300x200")
+    test.config(bg="gray")
+    test.label_prenom = tk.Label(test, text="Nom de la classe :")
+    test.label_prenom.pack()
+    global zone_texte 
+    zone_texte = tk.Entry(test)
+    zone_texte.pack()
+    bouton_afficher = tk.Button(test, text='Afficher les données', command=afficheListeEleveClasse)
+    bouton_afficher.pack()
+
+menuClasse.add_command(label="Liste d'élèves par classe", command=popSaisieNomClasse)
 ### LES POP UP DU MENU ELEVE ###
 
 # Pop up pour ajouter un élève

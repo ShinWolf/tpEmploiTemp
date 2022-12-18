@@ -154,3 +154,43 @@
 
 # # Exécuter la boucle principale de tkinter pour afficher l'interface graphique
 # window.mainloop()
+import tkinter as tk
+
+# Création de la fenêtre principale
+fenetre = tk.Tk()
+
+# Création de la liste de données à afficher
+liste_donnees = [('John', 25), ('Alice', 32), ('Bob', 41), ('Eve', 29)]
+
+def afficher_donnees():
+    # Récupération de la valeur saisie dans la zone de texte
+    valeur_saisie = zone_texte.get()
+
+    # Filtrage de la liste de données en fonction de la valeur saisie
+    donnees_filtrees = [(nom, age) for nom, age in liste_donnees if nom == valeur_saisie]
+
+    # Création de la boîte de dialogue
+    boite_dialogue = tk.Toplevel()
+    boite_dialogue.title('Données filtrées')
+
+    # Création de la zone de texte pour afficher les données filtrées
+    zone_texte_donnees = tk.Text(boite_dialogue)
+
+    # Ajout de chaque élément de la liste filtrée à la zone de texte
+    for nom, age in donnees_filtrees:
+        zone_texte_donnees.insert(tk.END, f'{nom}: {age}\n')
+
+    # Affichage de la zone de texte dans la boîte de dialogue
+    zone_texte_donnees.pack()
+
+# Création de la zone de texte pour saisir une valeur
+zone_texte = tk.Entry(fenetre)
+zone_texte.pack()
+
+# Création du bouton pour afficher les données filtrées
+bouton_afficher = tk.Button(fenetre, text='Afficher les données', command=afficher_donnees)
+bouton_afficher.pack()
+
+# Affichage de la fenêtre principale
+fenetre.mainloop()
+

@@ -1,5 +1,6 @@
-import sqlite3
 import tkinter as tk
+from tkinter import ttk
+import sqlite3
 from tkinter import *
 from tkinter import messagebox
 from modele.classe import Classe
@@ -24,7 +25,7 @@ menubar = Menu(root, tearoff=0)
 root.config(menu=menubar)
 
 menuEleve = Menu(menubar, tearoff=0)
-menuEleve.add_command(label="Afficher les élèves")
+
 menubar.add_cascade(label="Eleve", menu=menuEleve)
 
 
@@ -46,6 +47,26 @@ menubar.add_cascade(label="Classe", menu=menuClasse)
 
 menubar.add_command(label="Quitter", command=root.destroy)
 
+
+# Class pour créer le tableau qui affiche les élèves
+
+class Tableau(tk.Frame):
+    def __init__(self, parent, result):
+        tk.Frame.__init__(self, parent)
+        self.parent = parent
+        self.result = result
+        self.tableau = ttk.Treeview(self, columns=("ID", "Nom", "Prenom", "Classe"), show="headings")
+        self.tableau.heading("ID", text="ID")
+        self.tableau.heading("Nom", text="Nom")
+        self.tableau.heading("Prenom", text="Prenom")
+        self.tableau.heading("Classe", text="Classe")
+        self.tableau.pack()
+        self.afficher_tableau()
+
+    def afficher_tableau(self):
+        for row in self.result:
+            self.tableau.insert("", "end", values=row)
+
 ### LES POP UP DU MENU ELEVE ###
 
 # Pop up pour ajouter un élève
@@ -62,18 +83,13 @@ def popAjoutEleve():
     top.label_prenom.pack()
     top.prenom = tk.Entry(top)
     top.prenom.pack()
-    top.bouton_valider = tk.Button(top, text="Valider", command=valider)
+    top.label_idclasse = tk.Label(top, text="idclasse :")
+    top.label_idclasse.pack()
+    top.idclasse = tk.Entry(top)
+    top.idclasse.pack()
+    top.bouton_valider = tk.Button(top, text="Valider", command=(top.label_prenom.get(), top.prenom.get(), top.label_idclasse.get()))
     top.bouton_valider.pack()
 
-def valider(self):
-        self.conn = sqlite3.connect("tp2bdd.db")
-        self.cursor = self.conn.cursor()
-        self.cursor.execute("INSERT INTO APPRENANT (nomApprenant, prenomApprenant, idClasse) VALUES (?, ?, ?)",
-                            (self.nom.get(), self.prenom.get(), self.classe.get()))
-        self.conn.commit()
-        self.conn.close()
-        self.parent.refresh()
-        self.destroy()
 
 menuEleve.add_command(label="Ajout d'un élève", command=popAjoutEleve)
 

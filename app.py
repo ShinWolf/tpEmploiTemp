@@ -33,7 +33,6 @@ menubar.add_cascade(label="Eleve", menu=menuEleve)
 menuCours = Menu(menubar, tearoff=0)
 
 menuCours.add_command(label="Suppression d'un cours")
-menuCours.add_command(label="Modification d'un cours")
 menubar.add_cascade(label="Cours", menu=menuCours)
 
 menuMatiere = Menu(menubar, tearoff=0)
@@ -286,7 +285,7 @@ menuMatiere.add_command(label="Suppression d'une matière", command=popSupprimer
 # Pop up pour ajouter un cours
 def popAjouterCours():
     def getValAjoutMat():
-        Cours.ajoutNewCours(ajoutCour.id_matiere.get(),ajoutCour.id_enseignant.get(),ajoutCour.date.get(), ajoutCour.dateid_classe.get())
+        Cours.ajoutNewCours(ajoutCour.date.get(),ajoutCour.heure.get(),ajoutCour.id_classe.get(),ajoutCour.id_enseignant.get(),ajoutCour.id_matiere.get() )
     ajoutCour = Toplevel(menuCours)
     ajoutCour.title("Ajouter un cours")
     ajoutCour.geometry("300x200")
@@ -317,46 +316,54 @@ def popAjouterCours():
 menuCours.add_command(label="Ajout d'un cours", command=popAjouterCours)
 
 # Pop up pour modifier un cours
-class ModifierCours(tk.Toplevel):
-    def __init__(a, parent):
-        tk.Toplevel.__init__(a, parent)
-        a.parent = parent
-        a.title("Modifier un cours")
-        a.geometry("300x200")
-        a.config(bg="gray")
-        a.label_id = tk.Label(a, text="ID matiere :")
-        a.label_id.pack()
-        a.id = tk.Entry(a)
-        a.id.pack()
-        a.label_id_matiere = tk.Label(a, text="jours cours  :")
-        a.label_id_matiere.pack()
-        a.id_matiere = tk.Entry(a)
-        a.id_matiere.pack()
-        a.label_id_apprenant = tk.Label(a, text="heure cours :")
-        a.label_id_apprenant.pack()
-        a.id_apprenant = tk.Entry(a)
-        a.id_apprenant.pack()
-        a.label_date = tk.Label(a, text="Date :")
-        a.label_date.pack()
-        a.date = tk.Entry(a)
-        a.date.pack()
-        a.bouton_valider = tk.Button(a, text="Valider", command=a.valider)
-        a.bouton_valider.pack()
+def popModifCours():
+    def getValModCour():
+        Cours.mofidCours(modifCour.date.get(),modifCour.heure.get(),modifCour.id_classe.get(),modifCour.id_enseignant.get(),modifCour.id_matiere.get() )
+    modifCour = Toplevel(menuCours)
+    modifCour.title("Ajouter un cours")
+    modifCour.geometry("300x200")
+    modifCour.config(bg="gray")
+    modifCour.label_heure = tk.Label(modifCour, text="Heure :")
+    modifCour.label_heure.pack()
+    modifCour.heure = tk.Entry(modifCour)
+    modifCour.heure.pack()
+    modifCour.label_date = tk.Label(modifCour, text="Date :")
+    modifCour.label_date.pack()
+    modifCour.date = tk.Entry(modifCour)
+    modifCour.date.pack()
+    modifCour.label_id_matiere = tk.Label(modifCour, text="ID matière :")
+    modifCour.label_id_matiere.pack()
+    modifCour.id_matiere = tk.Entry(modifCour)
+    modifCour.id_matiere.pack()
+    modifCour.label_id_enseignant = tk.Label(modifCour, text="ID enseignant :")
+    modifCour.label_id_enseignant.pack()
+    modifCour.id_enseignant = tk.Entry(modifCour)
+    modifCour.id_enseignant.pack()
+    modifCour.label_id_classe = tk.Label(modifCour, text="ID classe :")
+    modifCour.label_id_classe.pack()
+    modifCour.id_classe = tk.Entry(modifCour)
+    modifCour.id_classe.pack()
+    modifCour.bouton_valider = tk.Button(modifCour, text="Valider", command=getValModCour)
+    modifCour.bouton_valider.pack()
+
+menuCours.add_command(label="Modification d'un cours", command= popModifCours)
+
 
 # Pop up pour supprimer un cours
-class SupprimerCours(tk.Toplevel):
-    def __init__(a, parent):
-        tk.Toplevel.__init__(a, parent)
-        a.parent = parent
-        a.title("Supprimer un cours")
-        a.geometry("300x200")
-        a.config(bg="gray")
-        a.label_id = tk.Label(a, text="ID :")
-        a.label_id.pack()
-        a.id = tk.Entry(a)
-        a.id.pack()
-        a.bouton_valider = tk.Button(a, text="Valider", command=a.valider)
-        a.bouton_valider.pack()
+def popModifCours():
+    def getValModCour():
+        Cours.mofidCours(modifCour.date.get(),modifCour.heure.get(),modifCour.id_classe.get(),modifCour.id_enseignant.get(),modifCour.id_matiere.get() )
+    suppCour = Toplevel(menuCours)
+    suppCour.title("Ajouter un cours")
+    suppCour.geometry("300x200")
+    suppCour.config(bg="gray")
+    suppCour.label_cours = tk.Label(modifCour, text="Heure :")
+    suppCour.label_cours.pack()
+    suppCour.heure = tk.Entry(modifCour)
+    suppCour.heure.pack()
+
+    modifCour.bouton_valider = tk.Button(modifCour, text="Valider", command=getValModCour)
+    modifCour.bouton_valider.pack()
 
 
 root.mainloop()

@@ -47,7 +47,23 @@ menuEnseignant.add_command(label="Afficher liste des enseignants")
 menuClasse = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Classe", menu=menuClasse)
 
-menuClasse.add_command(label="Liste d'élèves par classe")
+
+def poplistEleveClasse():
+    def getValueAffiche():
+        Classe.elevesDeClasse(top.classe.get())
+    top = Toplevel(menuEleve)
+    top.title("Afficher les élèves d'une classe")
+    top.geometry("300x200")
+    top.config(bg="gray")
+    top.label_classe = tk.Label(top, text="classe :")
+    top.label_classe.pack()
+    top.classe = tk.Entry(top)
+    top.classe.pack()
+    top.bouton_valider = tk.Button(top, text="Valider", command=getValueAffiche)
+    top.bouton_valider.pack()
+    
+
+menuClasse.add_command(label="Liste d'élèves par classe",  command=poplistEleveClasse)
 
 menubar.add_command(label="Quitter", command=root.destroy)
 

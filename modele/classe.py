@@ -10,6 +10,8 @@ class Classe:
     def elevesDeClasse(libelleClasse):
         conn = sqlite3.connect('tp2bdd.db')
         cursorForDB = conn.cursor()
-        listEleveClasse = cursorForDB.execute("SELECT nomApprenant, prenomApprenant, libelleClasse FROM APPRENANT INNER JOIN CLASSE on APPRENANT.idClasse = CLASSE.idClasse WHERE libelleClasse = (?)", (libelleClasse,))
+        listEleveClasse = cursorForDB.execute("SELECT nomApprenant, prenomApprenant, libelleClasse FROM APPRENANT INNER JOIN CLASSE on APPRENANT.idClasse = CLASSE.idClasse WHERE libelleClasse = (?)", (libelleClasse,)).fetchall()
         conn.commit()
         return listEleveClasse
+
+

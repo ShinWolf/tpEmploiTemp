@@ -1,3 +1,6 @@
+import sqlite3
+
+
 class Matiere:
 
     def __init__(self, libelleMatiere):
@@ -7,9 +10,21 @@ class Matiere:
         return self.__libelleMatiere
     def set_libelleMatiere(self, libelleMatiere):
         self.__libelleMatiere = libelleMatiere
+    
 
-    def ajoutMatiere(self, nomMatiere):
-        m =  Matiere(nomMatiere)
+    def ajoutMatiere(nomMatiere):
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB = conn.cursor()
+        nom = (nomMatiere,)
+        cursorForDB.execute("Insert into MATIERE(libelleMatiere) values(?)", nom)
+        conn.commit()
+        conn.close()
 
-    def delMatiere(self, nomMatiere):
-        del nomMatiere
+    def delMatiere(nomMatiere):
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB =  conn.cursor()
+        cursorForDB.execute("DELETE FROM MATIERE WHERE libelleMatiere = (?)", (nomMatiere,))
+        conn.commit()
+        conn.close()
+
+

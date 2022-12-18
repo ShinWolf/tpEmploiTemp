@@ -1,3 +1,5 @@
+import sqlite3
+
 class Enseignant:
 
     def __init__(self, nomEnseigant, prenomEnseignant):
@@ -18,8 +20,16 @@ class Enseignant:
         self.__listMatiereAssocie.append(matiere)
 
     def listAllEnseigant():
-        return 
-    
-    @staticmethod
-    def addNumbers(x, y):
-        return x + y
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB = conn.cursor()
+        listEnseigants = cursorForDB.execute("SELECT nomEnseignant, prenomEnseignant FROM ENSEIGNANT")
+        conn.commit()
+        return listEnseigants
+
+    def associerEnseigant(pIdEnseignant, pIdMatiere):
+        conn = sqlite3.connect('tp2bdd.db')
+        cursorForDB = conn.cursor()
+        associer = [(pIdEnseignant, pIdMatiere),]
+        cursorForDB.executemany("INSERT INTO MATIERE_ENSEIGNANT (k_idEnseignant, k_idMatiere) VALUES (?,?)",associer)
+        conn.commit()
+        conn.close()
